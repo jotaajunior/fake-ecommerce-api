@@ -34,7 +34,7 @@ const databaseConfig: DatabaseConfig = {
     | npm i pg
     |
     */
-    pg: {
+    sqlite: {
       client: 'sqlite3',
       connection: {
         filename: Application.tmpPath('db.sqlite3'),
