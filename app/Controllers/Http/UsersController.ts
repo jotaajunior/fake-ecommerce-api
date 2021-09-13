@@ -5,30 +5,30 @@ export default class UsersController {
   /**
    * Returns a list containing all the users
    */
-  public async index(): Promise<User[]> {
+  public async index({ response }: HttpContextContract) {
     const users = await User.all()
 
-    return users
+    return response.ok(users)
   }
 
   /**
    * Shows the specified user
    */
-  public async show({ request }: HttpContextContract): Promise<User> {
+  public async show({ request, response }: HttpContextContract) {
     const id = Number(request.param('id'))
     const user = await User.findOrFail(id)
 
-    return user
+    return response.ok(user)
   }
 
   /**
    * Creeates an user
    */
-  public async store({ request }: HttpContextContract): Promise<User> {
+  public async store({ request, response }: HttpContextContract) {
     const payload = request.all()
 
     const user = await User.create(payload)
 
-    return user
+    return response.ok(user)
   }
 }
