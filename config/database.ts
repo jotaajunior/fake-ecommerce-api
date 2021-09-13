@@ -5,7 +5,6 @@
  * file.
  */
 
-import Application from '@ioc:Adonis/Core/Application'
 import Env from '@ioc:Adonis/Core/Env'
 import { DatabaseConfig } from '@ioc:Adonis/Lucid/Database'
 
@@ -34,10 +33,17 @@ const databaseConfig: DatabaseConfig = {
     | npm i pg
     |
     */
-    sqlite: {
-      client: 'sqlite3',
+    pg: {
+      client: 'pg',
       connection: {
-        filename: Application.databasePath('db.sqlite3'),
+        host: Env.get('PG_HOST'),
+        port: Env.get('PG_PORT'),
+        user: Env.get('PG_USER'),
+        password: Env.get('PG_PASSWORD'),
+        database: Env.get('PG_DB_NAME'),
+        ssl: {
+          rejectUnauthorized: false,
+        },
       },
       migrations: {
         naturalSort: true,
