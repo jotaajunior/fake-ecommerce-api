@@ -10,7 +10,11 @@ export default class ProductsController {
     const id = Number(params.id)
 
     const category = await Category.findOrFail(id)
-    const products = await category.related('products').query()
+    const products = await category
+      .related('products')
+      .query()
+      .preload('categories')
+      .preload('colors')
 
     return response.ok(products)
   }
@@ -23,6 +27,7 @@ export default class ProductsController {
 
     const products = await Product.query()
       .preload('categories')
+      .preload('colors')
       .if(query, (q) => {
         q.whereRaw(`LOWER(name) like '%${query.toLowerCase()}%'`).orWhereRaw(
           `LOWER(description) like '%${query.toLowerCase()}%'`
@@ -40,6 +45,10 @@ export default class ProductsController {
 
     const product = await Product.findOrFail(id)
 
+    // Load relationships
+    await product.load('categories')
+    await product.load('colors')
+
     return response.ok(product)
   }
 
@@ -52,11 +61,13 @@ export default class ProductsController {
     // Creates the product
     const product = await Product.create(payload)
 
-    // Associates the product with the categories
+    // Associates the product with the categories and colors
     await product.related('categories').attach(payload.categories)
+    await product.related('categories').attach(payload.colors)
 
     // Load the categoriess for showing in the return
     await product.load('categories')
+    await product.load('colors')
 
     return response.ok(product)
   }

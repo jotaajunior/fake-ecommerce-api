@@ -6,6 +6,7 @@ import {
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Category from './Category'
+import Color from './Color'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -25,6 +26,9 @@ export default class Product extends BaseModel {
 
   @manyToMany(() => Category)
   public categories: ManyToMany<typeof Category>
+
+  @manyToMany(() => Color)
+  public colors: ManyToMany<typeof Color>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

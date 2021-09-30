@@ -19,3 +19,5 @@ Route.post('/purchases', 'PurchasesController.store').middleware('auth')
 Route.get('/categories', 'CategoriesController.index')
 Route.get('/categories/:id', 'CategoriesController.show')
 Route.post('/categories', 'CategoriesController.store')
+
+Route.get('/colors', 'ColorsController.index')
