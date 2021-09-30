@@ -1,5 +1,11 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  column,
+  ManyToMany,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
+import Category from './Category'
 
 export default class Product extends BaseModel {
   @column({ isPrimary: true })
@@ -12,7 +18,13 @@ export default class Product extends BaseModel {
   public description: string
 
   @column()
+  public picture: string
+
+  @column()
   public value: number
+
+  @manyToMany(() => Category)
+  public categories: ManyToMany<typeof Category>
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

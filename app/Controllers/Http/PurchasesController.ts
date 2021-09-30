@@ -12,6 +12,19 @@ export default class PurchasesController {
   }
 
   /**
+   * Shows specific purchase
+   */
+  public async show({ params, response }: HttpContextContract) {
+    const id = Number(params.id)
+
+    const purchase = await Purchase.findOrFail(id)
+
+    await purchase.load('products')
+
+    return response.ok(purchase)
+  }
+
+  /**
    * Creates a purchase
    *
    * @returns The created purchase

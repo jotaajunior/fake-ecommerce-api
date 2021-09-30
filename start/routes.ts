@@ -8,7 +8,13 @@ Route.get('/users/:id', 'UsersController.show')
 Route.post('/users', 'UsersController.store')
 
 Route.get('/products', 'ProductsController.index')
+Route.get('/products/:id', 'ProductsController.show')
 Route.post('/products', 'ProductsController.store')
 
 Route.get('/purchases', 'PurchasesController.index')
+Route.get('/purchases/:id', 'PurchasesController.show')
 Route.post('/purchases', 'PurchasesController.store').middleware('auth')
+
+Route.get('/categories', 'CategoriesController.index')
+Route.get('/categories/:id', 'CategoriesController.show')
+Route.post('/categories', 'CategoriesController.store')
