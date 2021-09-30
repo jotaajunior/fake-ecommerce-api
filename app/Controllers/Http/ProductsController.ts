@@ -1,7 +1,20 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Category from 'App/Models/Category'
 import Product from 'App/Models/Product'
 
 export default class ProductsController {
+  /**
+   * Show products by category
+   */
+  public async byCategory({ params, response }: HttpContextContract) {
+    const id = Number(params.id)
+
+    const category = await Category.findOrFail(id)
+    const products = await category.related('products').query()
+
+    return response.ok(products)
+  }
+
   /**
    * Returns a list containing all the products
    */

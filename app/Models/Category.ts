@@ -15,7 +15,7 @@ export default class Category extends BaseModel {
   public name: string
 
   @manyToMany(() => Product)
-  public posts: ManyToMany<typeof Product>
+  public products: ManyToMany<typeof Product>
 
   @column.dateTime({
     autoCreate: true,

@@ -9,6 +9,7 @@ Route.post('/users', 'UsersController.store')
 
 Route.get('/products', 'ProductsController.index')
 Route.get('/products/:id', 'ProductsController.show')
+Route.get('/products/category/:id', 'ProductsController.byCategory')
 Route.post('/products', 'ProductsController.store')
 
 Route.get('/purchases', 'PurchasesController.index')
