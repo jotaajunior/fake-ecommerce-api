@@ -10,7 +10,7 @@ export default class User extends BaseModel {
   public name: string
 
   @column()
-  public photo: string
+  public picture: string
 
   @column()
   public email: string
