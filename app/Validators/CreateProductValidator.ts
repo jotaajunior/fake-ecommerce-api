@@ -29,10 +29,12 @@ export default class CreateProductValidator {
       trim: true,
     }),
 
-    picture: schema.string({
-      escape: true,
-      trim: true,
-    }),
+    picture: schema.string.optional(
+      {
+        escape: false,
+      },
+      [rules.url()]
+    ),
 
     value: schema.number(),
 

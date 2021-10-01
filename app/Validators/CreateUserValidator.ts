@@ -29,6 +29,13 @@ export default class CreateUserValidator {
       trim: true,
     }),
 
+    picture: schema.string.optional(
+      {
+        escape: false,
+      },
+      [rules.url()]
+    ),
+
     email: schema.string(
       {
         escape: true,
