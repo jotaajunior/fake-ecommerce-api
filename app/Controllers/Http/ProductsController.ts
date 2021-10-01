@@ -1,6 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Category from 'App/Models/Category'
 import Product from 'App/Models/Product'
+import CreateProductValidator from 'App/Validators/CreateProductValidator'
 
 export default class ProductsController {
   /**
@@ -56,14 +57,14 @@ export default class ProductsController {
    * Creates a new product
    */
   public async store({ request, response }: HttpContextContract) {
-    const payload = request.all()
+    const payload = await request.validate(CreateProductValidator)
 
     // Creates the product
     const product = await Product.create(payload)
 
     // Associates the product with the categories and colors
-    await product.related('categories').attach(payload.categories)
-    await product.related('categories').attach(payload.colors)
+    await product.related('categories').attach(payload.categories || [])
+    await product.related('categories').attach(payload.colors || [])
 
     // Load the categoriess for showing in the return
     await product.load('categories')
