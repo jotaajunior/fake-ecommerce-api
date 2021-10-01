@@ -40,7 +40,7 @@ export default class CreateProductValidator {
       schema.number([
         rules.exists({
           column: 'id',
-          table: 'products',
+          table: 'categories',
         }),
       ])
     ),
