@@ -49,7 +49,7 @@ export default class CreateProductValidator {
       schema.number([
         rules.exists({
           column: 'id',
-          table: 'products',
+          table: 'colors',
         }),
       ])
     ),
@@ -66,5 +66,13 @@ export default class CreateProductValidator {
    * }
    *
    */
-  public messages = {}
+  public messages = {
+    'name.required': 'Nome é obrigatório',
+    'picture.required': 'Imagem do produto é obrigatório',
+    'value': 'Insira um valor válido para o preço',
+    'categories.*.exists':
+      'Identificador de categoria inválido, não existe um categoria com esse identificador',
+    'colors.*.exists':
+      'Identificador de cor inválido, não existe uma cor com esse identificador',
+  }
 }
