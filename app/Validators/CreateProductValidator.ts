@@ -29,6 +29,8 @@ export default class CreateProductValidator {
       trim: true,
     }),
 
+    description: schema.string.optional(),
+
     picture: schema.string.optional(
       {
         escape: false,
