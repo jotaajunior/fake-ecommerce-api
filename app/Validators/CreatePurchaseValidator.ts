@@ -43,6 +43,12 @@ export default class CreatePurchaseValidator {
         ]),
       })
     ),
+
+    street: schema.string(),
+
+    longitude: schema.string(),
+
+    latitude: schema.string(),
   })
 
   /**

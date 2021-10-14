@@ -17,6 +17,15 @@ export default class Purchase extends BaseModel {
   @column()
   public userId: number
 
+  @column()
+  public street: string
+
+  @column()
+  public longitude: string
+
+  @column()
+  public latitude: string
+
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
 

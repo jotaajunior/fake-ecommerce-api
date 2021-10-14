@@ -32,21 +32,22 @@ export default class PurchasesController {
    * @returns The created purchase
    */
   public async store({ request, auth, response }: HttpContextContract) {
-    const products = await request.validate(CreatePurchaseValidator)
+    const { products, ...rest } = await request.validate(
+      CreatePurchaseValidator
+    )
 
     // Creates the products
     const purchase = await Purchase.create({
       userId: auth.user!.id,
+      ...rest,
     })
 
     // Associate with the given products
-    await purchase
-      .related('products')
-      .attach(products.products.map((p) => p.id))
+    await purchase.related('products').attach(products.map((p) => p.id))
 
     let totalValue = 0
 
-    for (const { id, quantity } of products.products) {
+    for (const { id, quantity } of products) {
       let product = await Product.findOrFail(id)
       totalValue += quantity * product.value
     }
@@ -54,6 +55,9 @@ export default class PurchasesController {
     // Load the related products
     await purchase.load('products')
 
-    return response.ok({ ...purchase, value: totalValue })
+    return response.ok({
+      ...purchase.serialize(),
+      value: totalValue,
+    })
   }
 }
