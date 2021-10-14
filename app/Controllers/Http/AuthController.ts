@@ -7,6 +7,8 @@ export default class AuthController {
   public async index({ auth, response }: HttpContextContract) {
     const me = auth.user!
 
+    await me.load('address')
+
     return response.ok(me)
   }
 

@@ -1,6 +1,16 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import {
+  column,
+  beforeSave,
+  BaseModel,
+  belongsTo,
+  BelongsTo,
+  manyToMany,
+  ManyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
+import Address from './Address'
+import Product from './Product'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -14,6 +24,17 @@ export default class User extends BaseModel {
 
   @column()
   public email: string
+
+  @column()
+  public addressId: number
+
+  @belongsTo(() => Address)
+  public address: BelongsTo<typeof Address>
+
+  @manyToMany(() => Product, {
+    pivotTable: 'favorites',
+  })
+  public favorites: ManyToMany<typeof Product>
 
   @column({ serializeAs: null })
   public password: string

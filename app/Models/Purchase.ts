@@ -4,7 +4,6 @@ import {
   BelongsTo,
   belongsTo,
   column,
-  computed,
   ManyToMany,
   manyToMany,
 } from '@ioc:Adonis/Lucid/Orm'
@@ -20,20 +19,6 @@ export default class Purchase extends BaseModel {
 
   @belongsTo(() => User)
   public user: BelongsTo<typeof User>
-
-  /**
-   * Computes the total price of the purchases by addong
-   * the value of each procuct in the purchase
-   */
-  @computed()
-  public get value() {
-    const totalValue = (this.products || []).reduce(
-      (partialValue, product) => partialValue + product.value,
-      0
-    )
-
-    return totalValue
-  }
 
   @manyToMany(() => Product)
   public products: ManyToMany<typeof Product>

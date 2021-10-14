@@ -64,7 +64,7 @@ export default class ProductsController {
 
     // Associates the product with the categories and colors
     await product.related('categories').attach(payload.categories || [])
-    await product.related('categories').attach(payload.colors || [])
+    await product.related('colors').attach(payload.colors || [])
 
     // Load the categoriess for showing in the return
     await product.load('categories')

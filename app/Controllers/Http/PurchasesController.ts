@@ -1,5 +1,7 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Product from 'App/Models/Product'
 import Purchase from 'App/Models/Purchase'
+import CreatePurchaseValidator from 'App/Validators/CreatePurchaseValidator'
 
 export default class PurchasesController {
   /**
@@ -30,7 +32,7 @@ export default class PurchasesController {
    * @returns The created purchase
    */
   public async store({ request, auth, response }: HttpContextContract) {
-    const products = request.input('products')
+    const products = await request.validate(CreatePurchaseValidator)
 
     // Creates the products
     const purchase = await Purchase.create({
@@ -38,11 +40,20 @@ export default class PurchasesController {
     })
 
     // Associate with the given products
-    await purchase.related('products').attach(products)
+    await purchase
+      .related('products')
+      .attach(products.products.map((p) => p.id))
+
+    let totalValue = 0
+
+    for (const { id, quantity } of products.products) {
+      let product = await Product.findOrFail(id)
+      totalValue += quantity * product.value
+    }
 
     // Load the related products
     await purchase.load('products')
 
-    return response.ok(purchase)
+    return response.ok({ ...purchase, value: totalValue })
   }
 }

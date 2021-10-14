@@ -12,6 +12,10 @@ Route.get('/products/:id', 'ProductsController.show')
 Route.get('/products/category/:id', 'ProductsController.byCategory')
 Route.post('/products', 'ProductsController.store')
 
+Route.get('/favorites', 'FavoritesController.index').middleware('auth')
+Route.post('/favorites/:id', 'FavoritesController.store').middleware('auth')
+Route.delete('/favorites/:id', 'FavoritesController.destroy').middleware('auth')
+
 Route.get('/purchases', 'PurchasesController.index')
 Route.get('/purchases/:id', 'PurchasesController.show')
 Route.post('/purchases', 'PurchasesController.store').middleware('auth')
