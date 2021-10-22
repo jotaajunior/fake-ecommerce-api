@@ -16,7 +16,7 @@ Route.get('/favorites', 'FavoritesController.index').middleware('auth')
 Route.post('/favorites/:id', 'FavoritesController.store').middleware('auth')
 Route.delete('/favorites/:id', 'FavoritesController.destroy').middleware('auth')
 
-Route.get('/purchases', 'PurchasesController.index')
+Route.get('/purchases', 'PurchasesController.index').middleware('auth')
 Route.get('/purchases/:id', 'PurchasesController.show')
 Route.post('/purchases', 'PurchasesController.store').middleware('auth')
 

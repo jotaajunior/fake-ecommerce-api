@@ -8,9 +8,12 @@ import {
   BelongsTo,
   manyToMany,
   ManyToMany,
+  hasMany,
+  HasMany,
 } from '@ioc:Adonis/Lucid/Orm'
 import Address from './Address'
 import Product from './Product'
+import Purchase from './Purchase'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -35,6 +38,9 @@ export default class User extends BaseModel {
     pivotTable: 'favorites',
   })
   public favorites: ManyToMany<typeof Product>
+
+  @hasMany(() => Purchase)
+  public purchases: HasMany<typeof Purchase>
 
   @column({ serializeAs: null })
   public password: string

@@ -7,10 +7,14 @@ export default class PurchasesController {
   /**
    * Returns a list containing all the purchases
    */
-  public async index({ response }: HttpContextContract) {
-    const purchases = await Purchase.query().preload('products')
+  public async index({ auth, response }: HttpContextContract) {
+    const me = auth.user!
 
-    return response.ok(purchases)
+    await me.load('purchases', async (p) => {
+      await p.preload('products')
+    })
+
+    return response.ok(me.purchases)
   }
 
   /**
