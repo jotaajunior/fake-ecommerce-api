@@ -25,3 +25,7 @@ Route.get('/categories/:id', 'CategoriesController.show')
 Route.post('/categories', 'CategoriesController.store')
 
 Route.get('/colors', 'ColorsController.index')
+
+Route.get('/feedbacks/:id', 'FeedbacksController.index')
+Route.get('/feedbacks', 'FeedbacksController.showAll')
+Route.post('/feedbacks', 'FeedbacksController.store').middleware('auth')
