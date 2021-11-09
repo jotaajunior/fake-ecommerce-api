@@ -31,7 +31,7 @@ export default class CreateFeedbackValidator {
       }),
     ]),
 
-    picture: schema.string.optional({ trim: true, escape: true }, [
+    picture: schema.string.optional({ trim: true, escape: false }, [
       rules.url(),
     ]),
 
